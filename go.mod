@@ -8,7 +8,6 @@ require (
 	github.com/doug-martin/goqu/v9 v9.18.0
 	github.com/jinzhu/now v1.1.5
 	github.com/lib/pq v1.10.9
-	github.com/lights-T/goutil v0.0.0-20230917090041-cceefbc4ee01
 	github.com/lxn/walk v0.0.0-20210112085537-c389da54e794
 	github.com/micro/go-micro/v2 v2.9.1
 	github.com/rs/zerolog v1.30.0

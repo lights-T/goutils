@@ -12,7 +12,7 @@ import (
 	"strings"
 	"unsafe"
 
-	ustrings "github.com/lights-T/goutil/utils/strings"
+	ustrings "github.com/lights-T/goutils/utils/strings"
 
 	"github.com/StackExchange/wmi"
 	"golang.org/x/sys/windows"
