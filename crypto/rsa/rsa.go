@@ -9,7 +9,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"client-side/server/lib/utils/strings"
+	"github.com/lights-T/goutil/utils/strings"
 )
 
 type Rsa struct {

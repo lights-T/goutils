@@ -3,7 +3,7 @@ package strings
 import (
 	"testing"
 
-	lfiles "client-side/server/lib/files"
+	lfiles "github.com/lights-T/goutil/files"
 )
 
 func Test_BytesToStringByAscii(t *testing.T) {
