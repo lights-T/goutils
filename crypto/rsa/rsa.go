@@ -9,7 +9,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/lights-T/goutils/utils/strings"
+	"github.com/lights-T/goutils/strings"
 )
 
 type Rsa struct {
