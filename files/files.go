@@ -129,3 +129,30 @@ func DownloadFile(filePath string, rw http.ResponseWriter) error {
 
 	return err
 }
+
+// CreateDirIfNotExists 检测目录是否存在
+func CreateDirIfNotExists(path ...string) error {
+	for _, value := range path {
+		if FileExist(value) {
+			continue
+		}
+		err := os.Mkdir(value, 0755)
+		if err != nil {
+			return fmt.Errorf("创建目录失败:%s", err.Error())
+		}
+	}
+	return nil
+}
+
+// FileExist 判断文件是否存在及是否有权限访问
+func FileExist(file string) bool {
+	_, err := os.Stat(file)
+	if os.IsNotExist(err) {
+		return false
+	}
+	if os.IsPermission(err) {
+		return false
+	}
+
+	return true
+}
