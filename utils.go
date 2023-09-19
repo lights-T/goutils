@@ -201,8 +201,8 @@ Git Commit: {{.GitCommit}}
 	return buf.String(), err
 }
 
-// WorkDir 获取程序运行时根目录
-func WorkDir() (string, error) {
+// WorkDirByExecutable 获取程序运行时根目录
+func WorkDirByExecutable() (string, error) {
 	execPath, err := os.Executable()
 	if err != nil {
 		return "", err
@@ -212,6 +212,15 @@ func WorkDir() (string, error) {
 		wd = filepath.Dir(wd)
 	}
 	return wd, nil
+}
+
+// WorkDirByWd 获取程序运行时根目录
+func WorkDirByWd() (string, error) {
+	execPath, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	return execPath, nil
 }
 
 // WaitGroupWrapper waitGroup包装
