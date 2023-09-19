@@ -227,3 +227,7 @@ func (w *WaitGroupWrapper) Wrap(f func()) {
 		f()
 	}()
 }
+
+func Error(format string, a ...any) error {
+	return fmt.Errorf(format, a)
+}
