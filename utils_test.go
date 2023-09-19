@@ -57,7 +57,7 @@ func ExamplePanicToError() {
 }
 
 func TestWorkDir(t *testing.T) {
-	wd, err := WorkDir()
+	wd, err := WorkDirByExecutable()
 	if err != nil {
 		t.Fatal(err)
 	}
