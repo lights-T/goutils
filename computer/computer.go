@@ -12,9 +12,8 @@ import (
 	"strings"
 	"unsafe"
 
-	ustrings "github.com/lights-T/goutils/strings"
-
 	"github.com/StackExchange/wmi"
+	"github.com/lights-T/goutils/xstrings"
 	"golang.org/x/sys/windows"
 )
 
@@ -42,7 +41,7 @@ func GetPhysicalID() (string, error) {
 	}
 	sort.Strings(ids)
 	idsStr := strings.Join(ids, "|/|")
-	return ustrings.GetMd5String(idsStr, true, true), nil
+	return xstrings.GetMd5String(idsStr, true, true), nil
 }
 
 // GetMachineGuid 开始+r: regedit，打开注册表后find：MachineGuid
