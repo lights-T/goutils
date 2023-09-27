@@ -9,7 +9,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/lights-T/goutils/strings"
+	"github.com/lights-T/goutils/xstrings"
 )
 
 type Rsa struct {
@@ -61,7 +61,7 @@ func New(pubKey string, privKey string) (*Rsa, error) {
 
 func (r *Rsa) Encrypt(src string) (string, error) {
 	partLen := r.publicKey.N.BitLen()/8 - 11
-	chunks := split(strings.StringToBytes(src), partLen)
+	chunks := split(xstrings.StringToBytes(src), partLen)
 
 	var buf bytes.Buffer
 	for _, chunk := range chunks {
@@ -96,7 +96,7 @@ func (r *Rsa) Decrypt(src string) (string, error) {
 
 func (r *Rsa) hash(src string) []byte {
 	h := r.h.New()
-	h.Write(strings.StringToBytes(src))
+	h.Write(xstrings.StringToBytes(src))
 	return h.Sum(nil)
 }
 
