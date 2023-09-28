@@ -6,6 +6,7 @@ require (
 	github.com/StackExchange/wmi v1.2.1
 	github.com/denisenkom/go-mssqldb v0.12.3
 	github.com/doug-martin/goqu/v9 v9.18.0
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/hako/branca v0.0.0-20200807062402-6052ac720505
 	github.com/jinzhu/now v1.1.5
 	github.com/lib/pq v1.10.9
@@ -21,7 +22,9 @@ require (
 )
 
 require (
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/eknkc/basex v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.5 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
