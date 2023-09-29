@@ -125,9 +125,12 @@ func GetUserIdFromCtx(ctx context.Context) int64 {
 }
 
 // GetUserIdFromGinCtx 从context中获取用户ID
-func GetUserIdFromGinCtx(ctx *gin.Context) int64 {
+func GetUserIdFromGinCtx(ctx *gin.Context, key string) int64 {
 	var userId int64
 	v := ctx.Request.Header.Get(UserId)
+	if len(key) > 0 {
+		v = ctx.Request.Header.Get(key)
+	}
 	userId, _ = strconv.ParseInt(v, 10, 64)
 	if userId <= 0 {
 		userId = 0
@@ -136,7 +139,10 @@ func GetUserIdFromGinCtx(ctx *gin.Context) int64 {
 }
 
 // GetUserTokenFromGinCtx 从context中获取token
-func GetUserTokenFromGinCtx(ctx *gin.Context) string {
+func GetUserTokenFromGinCtx(ctx *gin.Context, key string) string {
+	if len(key) > 0 {
+		return ctx.Request.Header.Get(key)
+	}
 	return ctx.Request.Header.Get(UserToken)
 }
 
