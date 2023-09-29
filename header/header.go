@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gin-gonic/gin"
 	"github.com/micro/go-micro/v2/metadata"
 )
 
@@ -120,6 +121,17 @@ func GetUserIdFromCtx(ctx context.Context) int64 {
 		userId = 0
 	}
 
+	return userId
+}
+
+// GetUserIdFromGinCtx 从context中获取用户ID
+func GetUserIdFromGinCtx(ctx *gin.Context) int64 {
+	var userId int64
+	v := ctx.Request.Header.Get(UserId)
+	userId, _ = strconv.ParseInt(v, 10, 64)
+	if userId <= 0 {
+		userId = 0
+	}
 	return userId
 }
 
