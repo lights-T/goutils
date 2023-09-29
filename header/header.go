@@ -146,6 +146,11 @@ func GetUserTokenFromGinCtx(ctx *gin.Context, key string) string {
 	return ctx.Request.Header.Get(UserToken)
 }
 
+// GetHeaderFromGinCtx 从context中获取信息
+func GetHeaderFromGinCtx(ctx *gin.Context, key string) string {
+	return ctx.Request.Header.Get(key)
+}
+
 // GetXAuthorizationOutFromCtx 从context中获取XAuthorizationOut
 func GetXAuthorizationOutFromCtx(ctx context.Context) string {
 	v, ok := metadata.Get(ctx, XAuthorizationOut)
