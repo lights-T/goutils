@@ -11,3 +11,8 @@ func IsAlpha(data string) (bool, error) {
 func IsAlpha2(data string) (bool, error) {
 	return regexp.MatchString("^[a-z.A-Z]+$", data)
 }
+
+//IsAlphaAndNum 判断是否全部是英文及数字
+func IsAlphaAndNum(data string) (bool, error) {
+	return regexp.MatchString("^[a-z0-9A-Z]+$", data)
+}
