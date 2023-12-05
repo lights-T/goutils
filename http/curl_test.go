@@ -8,7 +8,7 @@ import (
 )
 
 func Test_Get(t *testing.T) {
-	newCurl := &Curl{
+	newCurl := &FastHttp{
 		Client: &fasthttp.Client{
 			MaxIdleConnDuration: time.Minute,
 			MaxConnDuration:     time.Minute,
