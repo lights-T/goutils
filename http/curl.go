@@ -8,7 +8,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-type Curl struct {
+type FastHttp struct {
 	Client      *fasthttp.Client
 	TimeOut     time.Duration
 	ContentType []byte
@@ -20,7 +20,7 @@ type Headers struct {
 	Value string
 }
 
-func (c *Curl) Get(url string) ([]byte, error) {
+func (c *FastHttp) Get(url string) ([]byte, error) {
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req)
 	req.SetRequestURI(url)
@@ -45,7 +45,7 @@ func (c *Curl) Get(url string) ([]byte, error) {
 	return d, nil
 }
 
-func (c *Curl) Post(url string, body []byte) ([]byte, error) {
+func (c *FastHttp) Post(url string, body []byte) ([]byte, error) {
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req)
 	req.SetRequestURI(url)
