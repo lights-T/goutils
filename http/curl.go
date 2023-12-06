@@ -72,8 +72,8 @@ func (c *FastHttp) Post(url string, body []byte) ([]byte, error) {
 }
 
 //PostForHeader204 结果为204，获取header为结果
-func (c *FastHttp) PostForHeader204(url string, body []byte) (*fasthttp.ResponseHeader, error) {
-	rsp := &fasthttp.ResponseHeader{}
+func (c *FastHttp) PostForHeader204(url string, body []byte) (fasthttp.ResponseHeader, error) {
+	rsp := fasthttp.ResponseHeader{}
 	req := fasthttp.AcquireRequest()
 	defer fasthttp.ReleaseRequest(req)
 	req.SetRequestURI(url)
@@ -91,5 +91,5 @@ func (c *FastHttp) PostForHeader204(url string, body []byte) (*fasthttp.Response
 	if res.StatusCode() != fasthttp.StatusNoContent {
 		return rsp, errors.New(fasthttp.StatusMessage(res.StatusCode()))
 	}
-	return &res.Header, nil
+	return res.Header, nil
 }
