@@ -146,6 +146,28 @@ func GetUserTokenFromGinCtx(ctx *gin.Context, key string) string {
 	return ctx.Request.Header.Get(UserToken)
 }
 
+// GetStringFromGinCtx 从context中获取string类型数据
+func GetStringFromGinCtx(ctx *gin.Context, key string) string {
+	if len(key) > 0 {
+		return ctx.Request.Header.Get(key)
+	}
+	return ""
+}
+
+// GetInt64FromGinCtx 从context中获取int类型数据
+func GetInt64FromGinCtx(ctx *gin.Context, key string) int64 {
+	var rsp int64
+	var v string
+	if len(key) > 0 {
+		v = ctx.Request.Header.Get(key)
+	}
+	rsp, _ = strconv.ParseInt(v, 10, 64)
+	if rsp <= 0 {
+		rsp = 0
+	}
+	return rsp
+}
+
 // GetHeaderFromGinCtx 从context中获取信息
 func GetHeaderFromGinCtx(ctx *gin.Context, key string) string {
 	return ctx.Request.Header.Get(key)
