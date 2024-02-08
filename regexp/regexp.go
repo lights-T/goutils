@@ -16,3 +16,8 @@ func IsAlpha2(data string) (bool, error) {
 func IsAlphaAndNum(data string) (bool, error) {
 	return regexp.MatchString("^[a-z0-9A-Z]+$", data)
 }
+
+//IsNum 判断是否全部是数字
+func IsNum(data string) (bool, error) {
+	return regexp.MatchString("^[0-9]+$", data)
+}

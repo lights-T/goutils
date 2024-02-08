@@ -9,3 +9,11 @@ func TestIsAlpha(t *testing.T) {
 	}
 	t.Log(m)
 }
+
+func TestIsNum(t *testing.T) {
+	m, err := IsNum("123")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}
