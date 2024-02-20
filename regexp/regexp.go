@@ -26,3 +26,18 @@ func IsNum(data string) (bool, error) {
 func IsDate(data string) (bool, error) {
 	return regexp.MatchString("^\\d{4}-\\d{1,2}-\\d{1,2}", data)
 }
+
+//IsMobilePhone 判断是否为手机号
+func IsMobilePhone(data string) (bool, error) {
+	return regexp.MatchString("^1[3456789]\\d{9}$", data)
+}
+
+//IsQQ 判断是否为QQ
+func IsQQ(data string) (bool, error) {
+	return regexp.MatchString("^\\d{5,}$", data)
+}
+
+//IsEmail 判断是否为Email
+func IsEmail(data string) (bool, error) {
+	return regexp.MatchString("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$", data)
+}
