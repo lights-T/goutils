@@ -26,3 +26,17 @@ func Test(t *testing.T) {
 		}
 	})
 }
+
+func TestReadExcel(t *testing.T) {
+	filePath := ""
+	cols, list, err := ReadeExcel(filePath)
+	if err != nil {
+		t.Fatal(err.Error())
+		return
+	}
+	t.Log(cols)
+	t.Log(list)
+	//for _, v := range list {
+	//t.Logf("第一行"v["名称"])
+	//}
+}

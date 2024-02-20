@@ -1,5 +1,6 @@
 package constant
 
+//时间相关
 const (
 	DateLayoutYear    = "2006"
 	DateLayoutMouth   = "2006-01"
@@ -13,4 +14,10 @@ const (
 	DateDayTime  = int64(86400) //一天的秒
 	DateHourTime = int64(3600)  //一小时的秒
 	DateMinTime  = int64(60)    //每分钟的秒
+)
+
+//错误相关
+const (
+	ErrUploadParamsIsNotExist = "上传信息不存在"
+	ErrUploadFileIsNotExist   = "上传文件不存在"
 )

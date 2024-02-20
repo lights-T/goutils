@@ -2,9 +2,10 @@ package excel
 
 import (
 	"fmt"
+	"net/url"
+
 	"github.com/gin-gonic/gin"
 	"github.com/xuri/excelize/v2"
-	"net/url"
 )
 
 func ReadeExcel(address string) ([]string, []map[string]string, error) {

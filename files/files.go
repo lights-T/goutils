@@ -8,6 +8,11 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strconv"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/lights-T/goutils/constant"
 )
 
 func FileHandler(filename, content string) error {
@@ -155,4 +160,34 @@ func FileExist(file string) bool {
 	}
 
 	return true
+}
+
+func Upload(ctx *gin.Context, fileDir string, req string) ([]string, map[string][]string, error) {
+	var filePaths []string
+	var value map[string][]string
+	//获取所有上传文件信息
+	form, err := ctx.MultipartForm()
+	if err != nil {
+		return filePaths, value, err
+	}
+	if form == nil {
+		return filePaths, value, fmt.Errorf(constant.ErrUploadParamsIsNotExist)
+	}
+	value = form.Value
+	fhs := form.File[req]
+	if len(fhs) == 0 {
+		return filePaths, value, fmt.Errorf(constant.ErrUploadFileIsNotExist)
+	}
+	if err := CheckFileDirAndCreate(fileDir); err != nil {
+		return filePaths, value, err
+	}
+	for _, f := range fhs {
+		currentTime := strconv.FormatInt(time.Now().UnixNano(), 10)
+		filePath := fmt.Sprintf("%s/%s", fileDir, currentTime+f.Filename)
+		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
+			return filePaths, value, err
+		}
+		filePaths = append(filePaths, filePath)
+	}
+	return filePaths, value, nil
 }
