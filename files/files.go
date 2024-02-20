@@ -163,6 +163,9 @@ func FileExist(file string) bool {
 }
 
 func Upload(ctx *gin.Context, fileDir string, req string) ([]string, map[string][]string, error) {
+	if len(req) == 0 {
+		req = "file"
+	}
 	var filePaths []string
 	var value map[string][]string
 	//获取所有上传文件信息
