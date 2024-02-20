@@ -17,3 +17,10 @@ func TestIsNum(t *testing.T) {
 	}
 	t.Log(m)
 }
+func TestIsDate(t *testing.T) {
+	m, err := IsDate("2020-13-01")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}

@@ -21,3 +21,8 @@ func IsAlphaAndNum(data string) (bool, error) {
 func IsNum(data string) (bool, error) {
 	return regexp.MatchString("^[0-9]+$", data)
 }
+
+//IsDate 判断是否为时间
+func IsDate(data string) (bool, error) {
+	return regexp.MatchString("^\\d{4}-\\d{1,2}-\\d{1,2}", data)
+}
