@@ -194,3 +194,7 @@ func Upload(ctx *gin.Context, fileDir string, req string) ([]string, map[string]
 	}
 	return filePaths, value, nil
 }
+
+func Remove(path string) error {
+	return os.Remove(path)
+}
