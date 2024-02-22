@@ -88,6 +88,5 @@ func TestMinToDHM(t *testing.T) {
 }
 
 func TestSecToDHM(t *testing.T) {
-	d, h, m, s := SecToDHM(59)
-	t.Log(d, h, m, s)
+	t.Log(SecToDHM(59))
 }

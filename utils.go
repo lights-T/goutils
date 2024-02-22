@@ -3,6 +3,7 @@ package goutils
 import (
 	"bytes"
 	"fmt"
+	"github.com/lights-T/goutils/domain"
 	"html/template"
 	"math"
 	"math/rand"
@@ -108,8 +109,17 @@ func MinToDHM(min int) (int, int, int) {
 }
 
 //SecToDHM 秒转化天、小时、分钟、秒
-func SecToDHM(sec int) (int, int, int, int) {
-	return sec / 60 / 60 / 24 % 365, sec / 60 / 60 % 24, sec / 60 % 60, sec % 60
+func SecToDHM(sec int) *domain.SecToDHM {
+	day := sec / 60 / 60 / 24 % 365
+	hour := sec / 60 / 60 % 24
+	min := sec / 60 % 60
+	second := sec % 60
+	return &domain.SecToDHM{
+		Day:  day,
+		Hour: hour,
+		Min:  min,
+		Sec:  second,
+	}
 }
 
 //ZnToUnicode 中文转unicode
