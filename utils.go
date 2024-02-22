@@ -107,6 +107,11 @@ func MinToDHM(min int) (int, int, int) {
 	return min / 60 / 24 % 365, min / 60 % 24, min % 60
 }
 
+//SecToDHM 秒转化天、小时、分钟、秒
+func SecToDHM(sec int) (int, int, int, int) {
+	return sec / 60 / 60 / 24 % 365, sec / 60 / 60 % 24, sec / 60 % 60, sec % 60
+}
+
 //ZnToUnicode 中文转unicode
 func ZnToUnicode(str string) string {
 	textQuoted := strconv.QuoteToASCII(str)

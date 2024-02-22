@@ -81,3 +81,13 @@ func TestWaitGroupWrapper_Wrap(t *testing.T) {
 		<-exited
 	}
 }
+
+func TestMinToDHM(t *testing.T) {
+	d, h, m := MinToDHM(86400)
+	t.Log(d, h, m)
+}
+
+func TestSecToDHM(t *testing.T) {
+	d, h, m, s := SecToDHM(59)
+	t.Log(d, h, m, s)
+}
