@@ -11,5 +11,4 @@ type SecToDHM struct {
 	Hour int
 	Min  int
 	Sec  int
-	Exp  string
 }
