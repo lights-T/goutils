@@ -12,6 +12,6 @@ func Test_GetDiffDays(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 	t2 := time.Now()
-	d := GetDiffDays(t1, t2)
+	d := GetDiffDays(t1, t2) //1
 	t.Fatal(d)
 }
