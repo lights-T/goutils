@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/jinzhu/now"
 )
 
 func Test_ScanPort(t *testing.T) {
@@ -89,4 +91,40 @@ func TestMinToDHM(t *testing.T) {
 
 func TestSecToDHM(t *testing.T) {
 	t.Log(SecToDHM(59))
+}
+
+func Test(t *testing.T) {
+	a, _ := now.Parse("2024-02-19 7:30:00")
+	aa, _ := now.Parse("2024-02-19 10:32")
+	aaa := aa.Unix() - a.Unix()
+	t.Log(aaa) //112
+
+	b, _ := now.Parse("2024-02-19 10:32:50")
+	bb, _ := now.Parse("2024-02-19 10:43:51")
+	bbb := bb.Unix() - b.Unix()
+	t.Log(bbb) //12
+
+	c, _ := now.Parse("2024-02-19 10:53:51")
+	cc, _ := now.Parse("2024-02-19 11:24:19")
+	ccc := cc.Unix() - c.Unix()
+	t.Log(ccc) //31
+
+	d, _ := now.Parse("2024-02-19 11:34:19")
+	dd, _ := now.Parse("2024-02-19 13:58:32")
+	ddd := dd.Unix() - d.Unix()
+	t.Log(ddd)
+
+	e, _ := now.Parse("2024-02-19 14:08:32")
+	ee, _ := now.Parse("2024-02-19 19:45:40")
+	eee := ee.Unix() - e.Unix()
+	t.Log(eee)
+
+	f, _ := now.Parse("2024-02-19 19:45:40")
+	ff, _ := now.Parse("2024-02-20 7:30:00")
+	fff := ff.Unix() - f.Unix() //755
+	t.Log(fff)                  //755
+
+	total := float64(aaa + ddd + eee + fff)
+	t.Log(total)
+	t.Log(total / float64(86400))
 }

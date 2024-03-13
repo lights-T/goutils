@@ -46,3 +46,8 @@ func GetDiffDaysBySecond(t1, t2 int64) int {
 	// 调用上面的函数
 	return GetDiffDays(time1, time2)
 }
+
+func GetBeforeTime(target string, sec int64) time.Time {
+	now, _ := now.Parse(target)
+	return now.Add(-time.Second * time.Duration(sec))
+}
