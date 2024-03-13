@@ -56,3 +56,7 @@ func GetAfterTime(target string, sec int64) time.Time {
 	now, _ := now.Parse(target)
 	return now.Add(time.Second * time.Duration(sec))
 }
+
+func GetAfterTimeByNow(sec int64) time.Time {
+	return time.Now().Add(time.Second * time.Duration(sec))
+}

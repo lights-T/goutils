@@ -30,3 +30,8 @@ func Test_GetAfterTime(t *testing.T) {
 	sec := int64(8 * 60 * 60)
 	t.Log(GetAfterTime(now, sec).Format(constant.DatetimeLayoutNa))
 }
+
+func Test_GetAfterTimeByNow(t *testing.T) {
+	sec := int64(8 * 60 * 60)
+	t.Log(GetAfterTimeByNow(sec).Format(constant.DatetimeLayoutNa))
+}
