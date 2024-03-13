@@ -24,3 +24,9 @@ func Test_GetBeforeTime(t *testing.T) {
 	sec := int64(8 * 60 * 60)
 	t.Log(GetBeforeTime(now, sec).Format(constant.DatetimeLayoutNa))
 }
+
+func Test_GetAfterTime(t *testing.T) {
+	now := "2024-03-1 4:10:10"
+	sec := int64(8 * 60 * 60)
+	t.Log(GetAfterTime(now, sec).Format(constant.DatetimeLayoutNa))
+}
