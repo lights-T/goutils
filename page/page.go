@@ -4,7 +4,7 @@ import "math"
 
 const (
 	defaultPageSize uint64 = 20
-	maxPageSize            = 100
+	maxPageSize            = 1000
 )
 
 // Page 设置page
