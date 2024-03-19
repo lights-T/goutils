@@ -25,6 +25,14 @@ func GetFormatDateTime(date string) string {
 	return _time.Format(constant.DatetimeLayout)
 }
 
+func GetFormatDateTimeNa(date string) string {
+	if len(date) == 0 {
+		return ""
+	}
+	_time, _ := now.Parse(date)
+	return _time.Format(constant.DatetimeLayoutNa)
+}
+
 func GetFormatDate(date string) string {
 	if len(date) == 0 {
 		return ""
