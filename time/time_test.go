@@ -35,3 +35,7 @@ func Test_GetAfterTimeByNow(t *testing.T) {
 	sec := int64(8 * 60 * 60)
 	t.Log(GetAfterTimeByNow(sec).Format(constant.DatetimeLayoutNa))
 }
+
+func Test_GetDurationToSec(t *testing.T) {
+	t.Log(GetDurationToSec("2024-01-02 12:14:10.641464", "2024-01-02 12:14:36.625598"))
+}

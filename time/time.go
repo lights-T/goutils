@@ -1,6 +1,8 @@
 package time
 
 import (
+	"fmt"
+	"math"
 	"time"
 
 	"github.com/jinzhu/now"
@@ -59,4 +61,12 @@ func GetAfterTime(target string, sec int64) time.Time {
 
 func GetAfterTimeByNow(sec int64) time.Time {
 	return time.Now().Add(time.Second * time.Duration(sec))
+}
+
+//GetDurationToSec 两者之差，秒
+func GetDurationToSec(startDate, endDate string) string {
+	startTime, _ := now.Parse(startDate)
+	endTime, _ := now.Parse(endDate)
+	duration := endTime.Sub(startTime)
+	return fmt.Sprintf("%d", int64(math.Ceil(duration.Seconds())+0/5))
 }
