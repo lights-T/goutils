@@ -12,6 +12,11 @@ func IsAlpha2(data string) (bool, error) {
 	return regexp.MatchString("^[a-z.A-Z]+$", data)
 }
 
+//IsAlphaAndNum2 判断是否全部是英文及英文下滑线
+func IsAlphaAndNum2(data string) (bool, error) {
+	return regexp.MatchString("^[a-z_0-9A-Z]+$", data)
+}
+
 //IsAlphaAndNum 判断是否全部是英文及数字
 func IsAlphaAndNum(data string) (bool, error) {
 	return regexp.MatchString("^[a-z0-9A-Z]+$", data)
