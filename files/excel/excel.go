@@ -8,7 +8,8 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func ReadeExcel(address string) ([]string, []map[string]string, error) {
+//ReadeExcel address文件地址；isIgnore是否忽略第一行
+func ReadeExcel(address string, isIgnore bool) ([]string, []map[string]string, error) {
 	cols := make([]string, 0, 100)
 	ret := make([]map[string]string, 0, 100)
 	f, err := excelize.OpenFile(address)
@@ -21,8 +22,16 @@ func ReadeExcel(address string) ([]string, []map[string]string, error) {
 	if err != nil {
 		return cols, ret, err
 	}
+	isTitle := 0
+	if isIgnore {
+		isTitle = 1
+	}
 	for i, row := range rows {
-		if i == 0 { //取得第一行的所有数据---execel表头
+		//忽略第一行
+		if isIgnore && i == 0 {
+			continue
+		}
+		if i == isTitle { //取得第一行的所有数据---execel表头
 			for _, colCell := range row {
 				cols = append(cols, colCell)
 			}

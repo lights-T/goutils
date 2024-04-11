@@ -29,7 +29,7 @@ func Test(t *testing.T) {
 
 func TestReadExcel(t *testing.T) {
 	filePath := ""
-	cols, list, err := ReadeExcel(filePath)
+	cols, list, err := ReadeExcel(filePath, false)
 	if err != nil {
 		t.Fatal(err.Error())
 		return
