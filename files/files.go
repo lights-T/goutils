@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -190,7 +191,10 @@ func Upload(ctx *gin.Context, fileDir string, req string) (*domain.UploadFilesIn
 	var fileSizes []int64
 	for _, f := range fhs {
 		currentTime := strconv.FormatInt(time.Now().UnixNano(), 10)
-		filePath := fmt.Sprintf("%s/%s", fileDir, currentTime+f.Filename)
+		if len(strings.Split(f.Filename, ".")) < 2 {
+			return filesInfo, value, fmt.Errorf("图片不合规")
+		}
+		filePath := fmt.Sprintf("%s/%s", fileDir, currentTime+fmt.Sprintf(".%s", strings.Split(f.Filename, ".")[1]))
 		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
 			return filesInfo, value, err
 		}
