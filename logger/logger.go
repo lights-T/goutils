@@ -100,8 +100,9 @@ func WashPath(s string) string {
 	return s[lIndex+1:]
 }
 
-func InitLogger(conf *Config) {
+func InitLogger(conf *Config) *zerolog.Logger {
 	l = New(conf)
+	return l
 }
 
 func Debugf(format string, args ...interface{}) {
