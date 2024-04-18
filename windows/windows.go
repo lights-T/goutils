@@ -10,6 +10,11 @@ func MessageBoxByErr(content string) {
 	walk.MsgBox(nil, "Error", content, walk.MsgBoxIconInformation)
 }
 
+func MessageBoxByInfo(content string) {
+	//w32.MessageBox(0, content, "Error", 0)
+	walk.MsgBox(nil, "Info", content, walk.MsgBoxIconInformation)
+}
+
 func Notify(appID, title, message string) {
 	notification := toast.Notification{
 		AppID:   appID,
