@@ -7,12 +7,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type CmdOutputContext struct {
+	TextFormatter *logrus.TextFormatter
+	Level         logrus.Level
+}
+
 //CmdOutput cmd标准输出
-func CmdOutput(level logrus.Level) {
-	if level == 0 {
-		level = logrus.InfoLevel
-	}
-	logrus.SetFormatter(&logrus.TextFormatter{})
+func CmdOutput(req *CmdOutputContext) {
+	textFormatter := req.TextFormatter
+	level := req.Level
+	logrus.SetFormatter(textFormatter)
 	logrus.SetOutput(os.Stdout)
 	writers := []io.Writer{os.Stdout}
 	fileAndStdoutWriter := io.MultiWriter(writers...)
