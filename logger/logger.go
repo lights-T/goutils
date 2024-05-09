@@ -110,80 +110,136 @@ func InitLogger(conf *Config, sl service.Logger) *zerolog.Logger {
 
 func Debugf(format string, args ...interface{}) {
 	l.Debug().Msgf(format, args...)
-	_ = serviceSystemLog.Infof(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Infof(format, args...)
+	}
 }
 
 func Debug(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Debug().Msg(args.(string))
-		_ = serviceSystemLog.Info(args.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(string))
+		}
 	case error:
 		l.Debug().Msg(args.(error).Error())
-		_ = serviceSystemLog.Info(args.(error).Error())
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(error).Error())
+		}
 	default:
 		l.Debug().Msg(fmt.Sprintf("%v", args))
-		_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
 func Infof(format string, args ...interface{}) {
 	l.Info().Msgf(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Infof(format, args...)
+	}
 }
 
 func Info(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Info().Msg(args.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(string))
+		}
 	case error:
 		l.Info().Msg(args.(error).Error())
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(error).Error())
+		}
 	default:
 		l.Info().Msg(fmt.Sprintf("%v", args))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
 func Warnf(format string, args ...interface{}) {
 	l.Warn().Msgf(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Warningf(format, args...)
+	}
 }
 
 func Warn(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Warn().Msg(args.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(args.(string))
+		}
 	case error:
 		l.Warn().Msg(args.(error).Error())
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(args.(error).Error())
+		}
 	default:
 		l.Warn().Msg(fmt.Sprintf("%v", args))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
 func Errorf(format string, args ...interface{}) {
 	l.Error().Msgf(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Errorf(format, args...)
+	}
 }
 
 func Error(err interface{}) {
 	switch err.(type) {
 	case string:
 		l.Error().Msg(err.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(err.(string))
+		}
 	case error:
 		l.Err(err.(error)).Send()
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(err.(error))
+		}
 	default:
 		errStr := fmt.Sprintf("%v", err)
 		l.Error().Msg(errStr)
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(errStr)
+		}
 	}
 }
 
 func Fatalf(format string, args ...interface{}) {
 	l.Fatal().Msgf(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Errorf(format, args...)
+	}
 }
 
 func Fatal(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Fatal().Msg(args.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(args.(string))
+		}
 	case error:
 		l.Fatal().Msg(args.(error).Error())
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(args.(error).Error())
+		}
 	default:
 		l.Fatal().Msg(fmt.Sprintf("%v", args))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(fmt.Sprintf("%v", args))
+		}
 	}
 }
