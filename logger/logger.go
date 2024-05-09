@@ -57,8 +57,9 @@ type Config struct {
 	// MaxBackups the max number of rolled files to keep
 	MaxBackups int
 	// MaxAge the max age in days to keep a logfile
-	MaxAge int
-	Debug  bool
+	MaxAge           int
+	Debug            bool
+	ServiceSystemLog service.Logger
 }
 
 func New(conf *Config) *zerolog.Logger {
@@ -102,9 +103,9 @@ func WashPath(s string) string {
 	return s[lIndex+1:]
 }
 
-func InitLogger(conf *Config, sl service.Logger) *zerolog.Logger {
+func InitLogger(conf *Config) *zerolog.Logger {
 	l = New(conf)
-	serviceSystemLog = sl
+	serviceSystemLog = conf.ServiceSystemLog
 	return l
 }
 
