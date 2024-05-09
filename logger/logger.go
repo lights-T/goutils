@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kardianos/service"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/rs/zerolog/pkgerrors"
@@ -15,6 +16,7 @@ import (
 )
 
 var l *zerolog.Logger
+var ServiceSystemLog service.Logger
 
 func newRollingFile(conf *Config) io.Writer {
 	if err := os.MkdirAll(conf.Directory, 0744); err != nil {
@@ -107,16 +109,20 @@ func InitLogger(conf *Config) *zerolog.Logger {
 
 func Debugf(format string, args ...interface{}) {
 	l.Debug().Msgf(format, args...)
+	_ = ServiceSystemLog.Infof(format, args...)
 }
 
 func Debug(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Debug().Msg(args.(string))
+		_ = ServiceSystemLog.Info(args.(string))
 	case error:
 		l.Debug().Msg(args.(error).Error())
+		_ = ServiceSystemLog.Info(args.(error).Error())
 	default:
 		l.Debug().Msg(fmt.Sprintf("%v", args))
+		_ = ServiceSystemLog.Info(fmt.Sprintf("%v", args))
 	}
 }
 
