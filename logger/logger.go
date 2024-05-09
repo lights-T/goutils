@@ -16,7 +16,7 @@ import (
 )
 
 var l *zerolog.Logger
-var ServiceSystemLog service.Logger
+var serviceSystemLog service.Logger
 
 func newRollingFile(conf *Config) io.Writer {
 	if err := os.MkdirAll(conf.Directory, 0744); err != nil {
@@ -102,27 +102,28 @@ func WashPath(s string) string {
 	return s[lIndex+1:]
 }
 
-func InitLogger(conf *Config) *zerolog.Logger {
+func InitLogger(conf *Config, sl service.Logger) *zerolog.Logger {
 	l = New(conf)
+	serviceSystemLog = sl
 	return l
 }
 
 func Debugf(format string, args ...interface{}) {
 	l.Debug().Msgf(format, args...)
-	_ = ServiceSystemLog.Infof(format, args...)
+	_ = serviceSystemLog.Infof(format, args...)
 }
 
 func Debug(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Debug().Msg(args.(string))
-		_ = ServiceSystemLog.Info(args.(string))
+		_ = serviceSystemLog.Info(args.(string))
 	case error:
 		l.Debug().Msg(args.(error).Error())
-		_ = ServiceSystemLog.Info(args.(error).Error())
+		_ = serviceSystemLog.Info(args.(error).Error())
 	default:
 		l.Debug().Msg(fmt.Sprintf("%v", args))
-		_ = ServiceSystemLog.Info(fmt.Sprintf("%v", args))
+		_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
 	}
 }
 
