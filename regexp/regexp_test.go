@@ -24,3 +24,27 @@ func TestIsDate(t *testing.T) {
 	}
 	t.Log(m)
 }
+
+func TestIsHHMM(t *testing.T) {
+	m, err := IsHHMM("07:12")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}
+
+func TestIsHHMMSS(t *testing.T) {
+	m, err := IsHHMMSS("23:12:19")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}
+
+func TestIsWeekly(t *testing.T) {
+	m, err := IsWeekly("0")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}

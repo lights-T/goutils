@@ -46,3 +46,23 @@ func IsQQ(data string) (bool, error) {
 func IsEmail(data string) (bool, error) {
 	return regexp.MatchString("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$", data)
 }
+
+//IsHHMM 小时:分钟
+func IsHHMM(data string) (bool, error) {
+	return regexp.MatchString("^([0-1][0-9]|2[0-3]):([0-5][0-9])$", data)
+}
+
+//IsHHMMSS 小时:分钟:秒
+func IsHHMMSS(data string) (bool, error) {
+	return regexp.MatchString("^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$", data)
+}
+
+//IsDD 日期 max=28
+func IsDD(data string) (bool, error) {
+	return regexp.MatchString("^([0-1][0-9]|2[0-8])$", data)
+}
+
+//IsWeekly 周几
+func IsWeekly(data string) (bool, error) {
+	return regexp.MatchString("^([1-7])$", data)
+}
