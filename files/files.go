@@ -213,3 +213,13 @@ func Upload(ctx *gin.Context, fileDir string, req string) (*domain.UploadFilesIn
 func Remove(path string) error {
 	return os.Remove(path)
 }
+
+//WriteFile 自动创建或追加写文件
+func WriteFile(filename, content string) error {
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if _, err = io.WriteString(f, content); err != nil {
+		return err
+	}
+
+	return nil
+}
