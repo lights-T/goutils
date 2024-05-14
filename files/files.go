@@ -24,8 +24,7 @@ func FileHandler(filename, content string) error {
 	if err != nil {
 		return err
 	}
-	_, err = io.WriteString(f, content)
-	if err != nil {
+	if _, err = io.WriteString(f, content); err != nil {
 		return err
 	}
 
