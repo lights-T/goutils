@@ -138,28 +138,28 @@ func Debug(args interface{}) {
 
 func Infof(format string, args ...interface{}) {
 	l.Info().Msgf(format, args...)
-	//if serviceSystemLog != nil {
-	//	_ = serviceSystemLog.Infof(format, args...)
-	//}
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Infof(format, args...)
+	}
 }
 
 func Info(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Info().Msg(args.(string))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(args.(string))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(string))
+		}
 	case error:
 		l.Info().Msg(args.(error).Error())
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(args.(error).Error())
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(error).Error())
+		}
 	default:
 		l.Info().Msg(fmt.Sprintf("%v", args))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
