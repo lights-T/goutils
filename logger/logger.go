@@ -111,28 +111,28 @@ func InitLogger(conf *Config) *zerolog.Logger {
 
 func Debugf(format string, args ...interface{}) {
 	l.Debug().Msgf(format, args...)
-	//if serviceSystemLog != nil {
-	//	_ = serviceSystemLog.Infof(format, args...)
-	//}
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Infof(format, args...)
+	}
 }
 
 func Debug(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Debug().Msg(args.(string))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(args.(string))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(string))
+		}
 	case error:
 		l.Debug().Msg(args.(error).Error())
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(args.(error).Error())
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(args.(error).Error())
+		}
 	default:
 		l.Debug().Msg(fmt.Sprintf("%v", args))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Info(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
