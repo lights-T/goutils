@@ -165,28 +165,28 @@ func Info(args interface{}) {
 
 func Warnf(format string, args ...interface{}) {
 	l.Warn().Msgf(format, args...)
-	//if serviceSystemLog != nil {
-	//	_ = serviceSystemLog.Warningf(format, args...)
-	//}
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Warningf(format, args...)
+	}
 }
 
 func Warn(args interface{}) {
 	switch args.(type) {
 	case string:
 		l.Warn().Msg(args.(string))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Warning(args.(string))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(args.(string))
+		}
 	case error:
 		l.Warn().Msg(args.(error).Error())
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Warning(args.(error).Error())
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(args.(error).Error())
+		}
 	default:
 		l.Warn().Msg(fmt.Sprintf("%v", args))
-		//if serviceSystemLog != nil {
-		//	_ = serviceSystemLog.Warning(fmt.Sprintf("%v", args))
-		//}
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Warning(fmt.Sprintf("%v", args))
+		}
 	}
 }
 
