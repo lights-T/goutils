@@ -48,3 +48,12 @@ func TestIsWeekly(t *testing.T) {
 	}
 	t.Log(m)
 }
+
+func TestIsDateTime(t *testing.T) {
+	//m, err := IsDateTime("2023-01-01")
+	m, err := IsDateTime("2023-01-01 00:00:00")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}

@@ -66,3 +66,8 @@ func IsDD(data string) (bool, error) {
 func IsWeekly(data string) (bool, error) {
 	return regexp.MatchString("^([1-7])$", data)
 }
+
+//IsDateTime 2023-01-01 小时:分钟:秒
+func IsDateTime(data string) (bool, error) {
+	return regexp.MatchString("^\\d{4}-\\d{1,2}-\\d{1,2} ([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$", data)
+}
