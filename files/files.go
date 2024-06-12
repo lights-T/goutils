@@ -213,6 +213,10 @@ func Remove(path string) error {
 	return os.Remove(path)
 }
 
+func RemoveAll(path string) error {
+	return os.RemoveAll(path)
+}
+
 //WriteFile 自动创建或追加写文件
 func WriteFile(filename, content string) error {
 	f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)

@@ -58,3 +58,10 @@ func TestDownloadFile(t *testing.T) {
 		t.Fatalf("unexpected download filename: %s", fields[1])
 	}
 }
+
+func TestRemoveAll(t *testing.T) {
+	if err := RemoveAll("./test"); err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log("Done.")
+}
