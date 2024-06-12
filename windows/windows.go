@@ -1,9 +1,11 @@
 package windows
 
 import (
+	"syscall"
+
+	"github.com/JamesHovious/w32"
 	"github.com/lxn/walk"
 	"gopkg.in/toast.v1"
-	"syscall"
 )
 
 func MessageBoxByErr(content string) {
@@ -14,6 +16,15 @@ func MessageBoxByErr(content string) {
 func MessageBoxByInfo(content string) {
 	//w32.MessageBox(0, content, "Error", 0)
 	walk.MsgBox(nil, "Info", content, walk.MsgBoxIconInformation)
+}
+
+//GetSystemMetrics 获取windows分辨率，0宽，1高
+func GetSystemMetrics(index int) int {
+	return w32.GetSystemMetrics(index)
+}
+
+func SystemMetricsByOne(text string) int {
+	return w32.MessageBox(0, text, "Tips", 1)
 }
 
 func Notify(appID, title, message string) {

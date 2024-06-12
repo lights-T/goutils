@@ -3,6 +3,7 @@ module github.com/lights-T/goutils
 go 1.18
 
 require (
+	github.com/JamesHovious/w32 v1.2.0
 	github.com/StackExchange/wmi v1.2.1
 	github.com/denisenkom/go-mssqldb v0.12.3
 	github.com/doug-martin/goqu/v9 v9.18.0
