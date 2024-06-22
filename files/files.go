@@ -226,3 +226,22 @@ func WriteFile(filename, content string) error {
 
 	return nil
 }
+
+func ReadFileToPath(fileName string) (string, error) {
+	var p string
+	var err error
+	file, err := os.Open(fileName)
+	if err != nil {
+		return p, err
+	}
+	defer file.Close()
+	b, err := ioutil.ReadAll(file)
+	if err != nil {
+		return p, err
+	}
+	p = string(b)
+	if err = CreateDirIfNotExists(p); err != nil {
+		return p, err
+	}
+	return p, nil
+}

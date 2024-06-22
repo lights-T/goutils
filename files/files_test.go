@@ -65,3 +65,11 @@ func TestRemoveAll(t *testing.T) {
 	}
 	t.Log("Done.")
 }
+
+func TestReadFileToPath(t *testing.T) {
+	s, err := ReadFileToPath("installPath.txt")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(s)
+}
