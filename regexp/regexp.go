@@ -71,3 +71,8 @@ func IsWeekly(data string) (bool, error) {
 func IsDateTime(data string) (bool, error) {
 	return regexp.MatchString("^\\d{4}-\\d{1,2}-\\d{1,2} ([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$", data)
 }
+
+//IsDirPath 是一个文件夹路径，必须是绝对路径
+func IsDirPath(data string) (bool, error) {
+	return regexp.MatchString("^[a-zA-Z]:\\\\(?:[^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]*$", data)
+}

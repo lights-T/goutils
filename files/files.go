@@ -2,6 +2,8 @@ package files
 
 import (
 	"fmt"
+	"github.com/lights-T/goutils"
+	"github.com/lights-T/goutils/regexp"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -227,6 +229,7 @@ func WriteFile(filename, content string) error {
 	return nil
 }
 
+//ReadFileToPath 读取路径文件夹
 func ReadFileToPath(fileName string) (string, error) {
 	var p string
 	var err error
@@ -240,6 +243,14 @@ func ReadFileToPath(fileName string) (string, error) {
 		return p, err
 	}
 	p = string(b)
+	isDir, err := regexp.IsDirPath(p)
+	if err != nil {
+		return p, err
+	}
+	if !isDir {
+		return p, goutils.Errorf("Not a standard folder absolute path.")
+	}
+
 	if err = CreateDirIfNotExists(p); err != nil {
 		return p, err
 	}
