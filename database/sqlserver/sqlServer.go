@@ -81,7 +81,7 @@ func AuthCreateDb(ctx context.Context, masterAddress, targetDbName string) error
 			return goutils.Errorf("Failed to create db, err: %s", err.Error())
 		}
 	} else {
-		fmt.Println("数据库已存在")
+		fmt.Println("The database already exists.")
 	}
 	return nil
 }
