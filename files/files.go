@@ -211,6 +211,15 @@ func Upload(ctx *gin.Context, fileDir string, req string) (*domain.UploadFilesIn
 	return filesInfo, value, nil
 }
 
+func IsExistToRemove(path string) error {
+	if isExist := CheckFileIsExist(path); isExist {
+		if err := Remove(path); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func Remove(path string) error {
 	return os.Remove(path)
 }
