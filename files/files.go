@@ -254,6 +254,19 @@ func WriteFileByWRONLY(filename, content string) error {
 	return nil
 }
 
+//WriteFileByOptional 覆盖写文件
+func WriteFileByOptional(filename string, way int, content string) error {
+	f, err := os.OpenFile(filename, way, 0666)
+	if err != nil {
+		return err
+	}
+	if _, err = io.WriteString(f, content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //ReadFileToPath 读取路径文件夹
 func ReadFileToPath(fileName string) (string, error) {
 	var p string
