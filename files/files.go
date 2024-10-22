@@ -2,8 +2,6 @@ package files
 
 import (
 	"fmt"
-	"github.com/lights-T/goutils"
-	"github.com/lights-T/goutils/regexp"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -15,8 +13,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lights-T/goutils"
 	"github.com/lights-T/goutils/constant"
 	"github.com/lights-T/goutils/domain"
+	"github.com/lights-T/goutils/regexp"
 )
 
 func FileHandler(filename, content string) error {
@@ -231,6 +231,9 @@ func RemoveAll(path string) error {
 //WriteFile 自动创建或追加写文件
 func WriteFile(filename, content string) error {
 	f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
 	if _, err = io.WriteString(f, content); err != nil {
 		return err
 	}
@@ -241,6 +244,9 @@ func WriteFile(filename, content string) error {
 //WriteFileByWRONLY 覆盖写文件
 func WriteFileByWRONLY(filename, content string) error {
 	f, err := os.OpenFile(filename, os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
 	if _, err = io.WriteString(f, content); err != nil {
 		return err
 	}
