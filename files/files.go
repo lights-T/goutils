@@ -238,6 +238,16 @@ func WriteFile(filename, content string) error {
 	return nil
 }
 
+//WriteFileByWRONLY 覆盖写文件
+func WriteFileByWRONLY(filename, content string) error {
+	f, err := os.OpenFile(filename, os.O_WRONLY, 0666)
+	if _, err = io.WriteString(f, content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 //ReadFileToPath 读取路径文件夹
 func ReadFileToPath(fileName string) (string, error) {
 	var p string
