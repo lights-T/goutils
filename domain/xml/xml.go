@@ -21,9 +21,10 @@ type AppDB struct {
 }
 
 type Email struct {
-	XMLName  xml.Name `xml:"emailConfig"`
-	Server   string   `xml:"server"`
-	Port     int      `xml:"port"`
-	UserName string   `xml:"userName"`
-	Password string   `xml:"password"`
+	XMLName      xml.Name `xml:"emailConfig"`
+	Server       string   `xml:"server"`
+	Port         int      `xml:"port"`
+	UserName     string   `xml:"userName"`
+	Password     string   `xml:"password"`
+	AutoSendTime int      `xml:"autoSendTime"`
 }
