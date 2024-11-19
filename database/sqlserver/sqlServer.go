@@ -39,6 +39,22 @@ func CheckFiledIsExist(DB *goqu.Database, tableName, filed string) (bool, error)
 	return isExist, nil
 }
 
+//AddNewField 检查数据表中字段是否存在，不存在添加
+func AddNewField(DB *goqu.Database, tableName, newField string) error {
+	isExist, err := CheckFiledIsExist(DB, tableName, newField)
+	if err != nil {
+		return err
+	}
+	if isExist {
+		return nil
+	}
+	if err := DB.QueryRow(
+		fmt.Sprintf("ALTER TABLE %s ADD %s nvarchar(255) NOT NULL default '';", tableName, newField)).Err(); err != nil {
+		return goutils.Errorf("Failed to add new field, err: %s", err.Error())
+	}
+	return nil
+}
+
 //AuthCreateDb 自动创建数据库，已存在不会继续处理
 func AuthCreateDb(ctx context.Context, masterAddress, targetDbName string) error {
 	dialect := goqu.Dialect("sqlserver")
