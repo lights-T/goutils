@@ -73,3 +73,12 @@ func TestReadFileToPath(t *testing.T) {
 	}
 	t.Log(s)
 }
+
+func TestCreateDirectories(t *testing.T) {
+	path := "E:\\ACM\\A\\B\\C\\D"
+	err := CheckDirectoriesAndCreate(path)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log("Done.")
+}

@@ -65,10 +65,10 @@ func CheckFileDir(path string, typeStr string) error {
 	return nil
 }
 
-func CheckFileDirAndCreate(path string) error {
+func CheckDirectoriesAndCreate(path string) error {
 	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		if err = os.Mkdir(path, os.ModePerm); err != nil {
+		if err = os.MkdirAll(path, os.ModePerm); err != nil {
 			return err
 		}
 	}
@@ -184,7 +184,7 @@ func Upload(ctx *gin.Context, fileDir string, req string) (*domain.UploadFilesIn
 	if len(fhs) == 0 {
 		return filesInfo, value, fmt.Errorf(constant.ErrUploadFileIsNotExist)
 	}
-	if err := CheckFileDirAndCreate(fileDir); err != nil {
+	if err := CheckDirectoriesAndCreate(fileDir); err != nil {
 		return filesInfo, value, err
 	}
 	var filePaths []string
