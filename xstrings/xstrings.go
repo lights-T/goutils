@@ -68,3 +68,21 @@ func RandString(n int) string {
 
 	return sb.String()
 }
+
+func SplitData(input string, max int) (string, string) {
+	// 使用";"作为分隔符分割输入字符串
+	parts := strings.Split(input, ";")
+
+	// 如果分割后的元素数量不超过100，则直接返回原字符串和空字符串
+	if len(parts) <= max {
+		return input, ""
+	}
+
+	// 构建A变量（前100个元素）
+	aVariable := strings.Join(parts[:100], ";")
+
+	// 构建B变量（剩余的元素）
+	bVariable := strings.Join(parts[100:], ";")
+
+	return aVariable, bVariable
+}
