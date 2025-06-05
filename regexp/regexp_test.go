@@ -57,3 +57,12 @@ func TestIsDateTime(t *testing.T) {
 	}
 	t.Log(m)
 }
+
+func TestIsDirPath(t *testing.T) {
+	//m, err := IsDateTime("2023-01-01")
+	m, err := IsDirPath("C:\\Users\\E1394288\\Downloads")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(m)
+}

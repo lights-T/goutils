@@ -79,10 +79,10 @@ func SplitData(input string, max int) (string, string) {
 	}
 
 	// 构建A变量（前100个元素）
-	aVariable := strings.Join(parts[:100], ";")
+	aVariable := strings.Join(parts[:max], ";")
 
 	// 构建B变量（剩余的元素）
-	bVariable := strings.Join(parts[100:], ";")
+	bVariable := strings.Join(parts[max:], ";")
 
 	return aVariable, bVariable
 }

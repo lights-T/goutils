@@ -93,6 +93,10 @@ func TestSecToDHM(t *testing.T) {
 	t.Log(SecToDHM(59))
 }
 
+func TestGetDurationToMin(t *testing.T) {
+	t.Log(GetDurationToMin("2025-06-05 07:53:31", "2025-06-05 08:10:31"))
+}
+
 func Test(t *testing.T) {
 	a, _ := now.Parse("2024-02-19 7:30:00")
 	aa, _ := now.Parse("2024-02-19 10:32")
