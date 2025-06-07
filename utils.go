@@ -255,3 +255,16 @@ func (w *WaitGroupWrapper) Wrap(f func()) {
 func Errorf(format string, a ...interface{}) error {
 	return fmt.Errorf(format, a...)
 }
+
+func GenRGB(colorStr string) (red, green, blue uint8, err error) {
+	colorStr = strings.TrimPrefix(colorStr, "#")       //过滤掉16进制前缀
+	color64, err := strconv.ParseInt(colorStr, 16, 32) //字串到数据整型
+	if err != nil {
+		return
+	}
+	color32 := int(color64) //类型强转
+	red = uint8(color32 >> 16)
+	green = uint8((color32 & 0x00FF00) >> 8)
+	blue = uint8(color32 & 0x0000FF)
+	return
+}
