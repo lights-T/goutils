@@ -9,7 +9,7 @@ func Test_limiter(t *testing.T) {
 	//	r.Use(CorsMiddleware())
 	//
 	//	// 创建一个限流器：每秒允许 1 次请求
-	//	limitedHandler := rateLimitMiddleware(time.Second, 1)
+	//	limitedHandler := RateLimitMiddleware(time.Second, 1)
 	//
 	//	ddd := r.Group("/api")
 	//{

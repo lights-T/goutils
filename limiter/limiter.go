@@ -41,8 +41,8 @@ func (l *ipRateLimiter) getBucket(ip string) *ratelimit.Bucket {
 	return bucket
 }
 
-// 限流中间件工厂函数
-func rateLimitMiddleware(fillInterval time.Duration, capacity int64) gin.HandlerFunc {
+// RateLimitMiddleware 限流中间件工厂函数
+func RateLimitMiddleware(fillInterval time.Duration, capacity int64) gin.HandlerFunc {
 	limiter := newIPRateLimiter(fillInterval, capacity)
 
 	return func(c *gin.Context) {
