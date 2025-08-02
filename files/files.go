@@ -144,7 +144,7 @@ func CreateDirIfNotExists(path ...string) error {
 		if FileExist(value) {
 			continue
 		}
-		err := os.Mkdir(value, 0755)
+		err := os.MkdirAll(value, 0755)
 		if err != nil {
 			return fmt.Errorf("创建目录失败:%s", err.Error())
 		}
