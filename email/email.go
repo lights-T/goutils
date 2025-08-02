@@ -1,6 +1,8 @@
 package email
 
 import (
+	"crypto/tls"
+
 	"gopkg.in/gomail.v2"
 )
 
@@ -22,6 +24,7 @@ type Conf struct {
 	Cc             []string
 	Subject        string
 	Body           string // Html message (optional)
+	SecureVerify   bool   //是否验证服务器证书等信息，默认不验证
 }
 
 func NewEmail(c *Conf) *Service {
@@ -37,6 +40,7 @@ func NewEmail(c *Conf) *Service {
 	m.SetHeader("Subject", c.Subject)
 	m.SetBody("text/html", c.Body)
 	emailConn := gomail.NewDialer(c.Host, c.Port, c.UserName, c.Password)
+	emailConn.TLSConfig = &tls.Config{InsecureSkipVerify: !c.SecureVerify}
 	return &Service{
 		EmailConn: emailConn,
 		EmailConf: c,

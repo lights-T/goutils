@@ -18,14 +18,15 @@ func Test_Running(t *testing.T) {
 			"谢谢！",
 	)
 	conf := &Conf{
-		UserName: "xxx@qq.com",
-		Password: "xxx",
-		Host:     "smtp.qq.com",
-		Port:     587,
-		From:     "xxx@qq.com",
-		To:       []string{"yyy@yyy.com"},
-		Subject:  "邮件发送测试",
-		Body:     content,
+		UserName:     "xxx@qq.com",
+		Password:     "xxx",
+		Host:         "smtp.qq.com",
+		Port:         587,
+		From:         "xxx@qq.com",
+		To:           []string{"yyy@yyy.com"},
+		Subject:      "邮件发送测试",
+		Body:         content,
+		SecureVerify: false,
 		//Body: "********************************************************************************************************\n\n\n\n\n\n\n\n\n\n" +
 		//	">>>>>>If you have any comments/requests regarding to this email, please contact xxx@xxx.com <<<<<<\n" +
 		//	"********************************************************************************************************\n" +
