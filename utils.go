@@ -271,12 +271,26 @@ func GenRGB(colorStr string) (red, green, blue uint8, err error) {
 	return
 }
 
-//GetNextRunTime github.com/robfig/cron/v3
-func GetNextRunTime(spec string) (string, error) {
+//GetNextRunTime5 github.com/robfig/cron/v3
+func GetNextRunTime5(spec string) (string, error) {
 	schedule, err := cron.ParseStandard(spec) // 或 cron.NewParser(...).Parse(spec)
 	if err != nil {
 		return "", err
 	}
 	next := schedule.Next(time.Now())
+	return next.Format(lconstant.DatetimeLayout), nil
+}
+
+func GetNextRunTime6(spec string) (string, error) {
+	// 创建一个支持秒的 Parser，可以通过设置相应的位掩码来指定需要支持的字段
+	parser := cron.NewParser(
+		cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor,
+	)
+	schedule, err := parser.Parse(spec)
+	if err != nil {
+		return "", err
+	}
+
+	next := schedule.Next(time.Now().Local())
 	return next.Format(lconstant.DatetimeLayout), nil
 }
