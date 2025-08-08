@@ -3,7 +3,6 @@ package goutils
 import (
 	"bytes"
 	"fmt"
-	"github.com/lights-T/goutils/domain"
 	"html/template"
 	"math"
 	"math/rand"
@@ -17,6 +16,9 @@ import (
 	"time"
 
 	"github.com/jinzhu/now"
+	lconstant "github.com/lights-T/goutils/constant"
+	"github.com/lights-T/goutils/domain"
+	"github.com/robfig/cron/v3"
 )
 
 func ScanPort(protocol string, hostname string, port int) bool {
@@ -267,4 +269,14 @@ func GenRGB(colorStr string) (red, green, blue uint8, err error) {
 	green = uint8((color32 & 0x00FF00) >> 8)
 	blue = uint8(color32 & 0x0000FF)
 	return
+}
+
+//GetNextRunTime github.com/robfig/cron/v3
+func GetNextRunTime(spec string) (string, error) {
+	schedule, err := cron.ParseStandard(spec) // 或 cron.NewParser(...).Parse(spec)
+	if err != nil {
+		return "", err
+	}
+	next := schedule.Next(time.Now())
+	return next.Format(lconstant.DatetimeLayout), nil
 }
