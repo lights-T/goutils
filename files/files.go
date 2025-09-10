@@ -33,6 +33,10 @@ func FileHandler(filename, content string) error {
 	return nil
 }
 
+func RenameFile(oldName, newName string) error {
+	return os.Rename(oldName, newName)
+}
+
 //CheckFileIsExist 判断文件是否存在  存在返回 true 不存在返回false
 func CheckFileIsExist(filename string) bool {
 	var exist = true
