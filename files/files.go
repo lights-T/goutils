@@ -298,3 +298,12 @@ func ReadFileToPath(fileName string) (string, error) {
 	}
 	return p, nil
 }
+
+//PathClear 标准化路径，将转义后的路径标准化
+func PathClear(path string) string {
+	return filepath.Clean(path)
+}
+
+func Rename(oldPath, newPath string) error {
+	return os.Rename(oldPath, newPath)
+}
