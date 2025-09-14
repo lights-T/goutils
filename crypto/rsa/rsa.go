@@ -5,6 +5,7 @@ import (
 	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
+	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
 	"fmt"
@@ -130,4 +131,49 @@ func split(buf []byte, lim int) [][]byte {
 		chunks = append(chunks, buf[:])
 	}
 	return chunks
+}
+
+//SignPKCS1v15 加签
+func SignPKCS1v15(privKey string, originalData []byte) (string, error) {
+	// 计算哈希
+	hashed := sha256.Sum256(originalData)
+	// 私钥签名
+	b, err := base64.StdEncoding.DecodeString(privKey)
+	if err != nil {
+		return "", err
+	}
+	priv, err := x509.ParsePKCS8PrivateKey(b)
+	if err != nil {
+		return "", err
+	}
+	signature, err := rsa.SignPKCS1v15(rand.Reader, priv.(*rsa.PrivateKey), crypto.SHA256, hashed[:])
+	if err != nil {
+		return "", err
+	}
+	// Base64 编码签名（便于传输）
+	encodedSignature := base64.StdEncoding.EncodeToString(signature)
+	return encodedSignature, nil
+}
+
+//VerifyPKCS1v15 验签
+func VerifyPKCS1v15(publicKey, receivedEncodedSignature string, receivedData []byte) error {
+	receivedSignature, _ := base64.StdEncoding.DecodeString(receivedEncodedSignature)
+	// 3.2 对接收到的数据重新计算哈希
+	receivedHashed := sha256.Sum256(receivedData)
+
+	b, err := base64.StdEncoding.DecodeString(publicKey)
+	if err != nil {
+		return err
+	}
+	pub, err := x509.ParsePKIXPublicKey(b)
+	if err != nil {
+		return err
+	}
+
+	// 3.3 使用公钥验证签名
+	err = rsa.VerifyPKCS1v15(pub.(*rsa.PublicKey), crypto.SHA256, receivedHashed[:], []byte(receivedSignature))
+	if err != nil {
+		return err
+	}
+	return nil
 }

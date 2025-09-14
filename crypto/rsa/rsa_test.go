@@ -86,3 +86,55 @@ func BenchmarkRsa_Verify(b *testing.B) {
 		assert.NoError(b, err)
 	}
 }
+
+//正确流程：签名 + 传输 + 验证
+//发送方：
+//1. 原始数据 → 计算哈希 → 用私钥签名 → 得到签名
+//2. 发送：原始数据 + Base64 编码的签名
+//
+//接收方：
+//1. 收到：原始数据 + 签名（Base64 解码）
+//2. 对收到的数据计算哈希
+//3. 用公钥验证：这个哈希 + 签名 是否匹配
+//4. 匹配 → 数据可信；不匹配 → 被篡改或来源非法
+func Test_Auth(t *testing.T) {
+	privateKey := "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAML8rhqz2tTzANW+UGXsdkTJNhS8jpLqk+SyqrsD/bkqiCbSG6tbeHbJcLKecxQlhSMdCAydmU50JK2THtzb648S82MAXz/JKBGC1feRLstBFqdZcS4a6TxFaJnpSaNTB4jFBGgGcM/91mzDz0v58GINfGrhmsa5fRldwRmPYnNRAgMBAAECgYBYuJiP1d5wntF2cE4s0ldOHS/aZ6GH/+yjVxiQV9SO+GdTIq8sXUaG5km9PJOoSxo1S/RpqRwksnwt7o9Qd1DK0D3iNEjBni6ywzm6P33swcwSrx5dRuYwpeR7L3KJQZkS2ugrX99ZoABwemWGFj6U3rDnV0mFPI6WMMzQ3KCvMQJBAMWbVqKgFfa8mNnd2v1s/risrBeEz4F2NY/rm9D+KG+BXxVhwgpc5XwFC8zympOs1AHBhudskid840ptEaM7rqsCQQD8mykoh5YABRAu43YFUNrJPVYOyHJ4l1OpqnLZcGOJbpFbVy9pFPe7uw3WtAfvyY4AJHd2lapWJhkqwZf2tvXzAkAKsR786aCGmynCEAj7UVxu7ZjaJOt9W8IGKX9izX2umtdkNsfi+6fHEBbVXgMTHnTSK4B7IRq/XDiIHGKp7F7FAkEAs+l63f/7qNXyWcLtqwmUWiISagL/7L2y+7OHizCN5DNY2dp1zPz/GLk4OQQOZw2B0r4mS9J6+FK4OAicSD61WwJBAKEPBBXNOtciODI4T4ncpsX2XlR/cSp2jWH+e25qkTcy8XGDyiKn3WQCWj1rU4nLJYfx25TlrqbPwbDcSkEEgiU="
+	publicKey := "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDC/K4as9rU8wDVvlBl7HZEyTYUvI6S6pPksqq7A/25Kogm0hurW3h2yXCynnMUJYUjHQgMnZlOdCStkx7c2+uPEvNjAF8/ySgRgtX3kS7LQRanWXEuGuk8RWiZ6UmjUweIxQRoBnDP/dZsw89L+fBiDXxq4ZrGuX0ZXcEZj2JzUQIDAQAB"
+
+	originalData := []byte("用户ID: 12345, 操作: 转账100元, 时间: 2025-04-05")
+	t.Run("Signature", func(t *testing.T) {
+		// ====================
+		// 1. 模拟：生成密钥对
+		// ====================
+		//privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+		//if err != nil {
+		//	log.Fatal("生成密钥失败:", err)
+		//}
+		//publicKey := &privateKey.PublicKey
+
+		// ====================
+		// 2. 发送方：签名
+		// ====================
+		//originalData := []byte("用户ID: 12345, 操作: 转账100元, 时间: 2025-04-05")
+
+		// 私钥签名
+		encodedSignature, err := SignPKCS1v15(privateKey, originalData)
+		if err != nil {
+			t.Fatal("签名失败: ", err)
+		}
+		t.Logf("编码后的签名: %s", encodedSignature)
+		t.Logf("编码后的数据: %s", originalData)
+	})
+
+	t.Run("Verify", func(t *testing.T) {
+		encodedSignature := "dkXsf9FiXIVHJGiwtcFSCj9hqQQkcQpK/iCQl/1D974TzwoQ1wTjw2GEFIlyqziSKORCztIHbTGS4kwbXjMOkIcUFdD8ZNBZlPWqdz6ilj/2OwDPnZtqFvMqjDCfD4cnyEmntPUimE84+1u1/KpuNari0q4sLlBWU3EFpdN4iJo="
+
+		// 3.3 使用公钥验证签名
+		err := VerifyPKCS1v15(publicKey, encodedSignature, originalData)
+		if err != nil {
+			t.Fatal("❌ 签名验证失败：数据可能被篡改或来源非法")
+			return
+		}
+		t.Log("验签成功")
+	})
+}
