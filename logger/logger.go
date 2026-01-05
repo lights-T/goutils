@@ -23,13 +23,35 @@ func newRollingFile(conf *Config) io.Writer {
 		log.Error().Err(err).Str("path", conf.Directory).Msg("can't create log directory")
 		return nil
 	}
+
 	fPath := path.Join(conf.Directory, conf.Filename)
-	if _, err := os.Stat(fPath); os.IsNotExist(err) {
-		if _, err = os.Create(fPath); err != nil {
-			log.Error().Err(err).Str("file", fPath).Msg("can't create log file")
+
+	// 检查文件是否存在以及是否为空
+	var needBOM bool
+	if info, err := os.Stat(fPath); os.IsNotExist(err) {
+		// 文件不存在 → 需要创建，并写入 BOM
+		needBOM = true
+	} else if err == nil && info.Size() == 0 {
+		// 文件存在但为空 → 可以安全写入 BOM
+		needBOM = true
+	}
+
+	// 如果需要 BOM，先创建文件并写入 BOM
+	if needBOM {
+		file, err := os.OpenFile(fPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+		if err != nil {
+			log.Error().Err(err).Str("file", fPath).Msg("can't create log file for BOM")
 			return nil
 		}
+		// 写入 UTF-8 BOM
+		_, err = file.Write([]byte{0xEF, 0xBB, 0xBF})
+		if err != nil {
+			log.Error().Err(err).Str("file", fPath).Msg("failed to write BOM")
+		}
+		file.Close()
 	}
+
+	// 返回 lumberjack logger（它会追加写入）
 	return &lumberjack.Logger{
 		Filename:   fPath,
 		MaxBackups: conf.MaxBackups, // files
