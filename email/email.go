@@ -31,11 +31,19 @@ func NewEmail(c *Conf) *Service {
 	m := gomail.NewMessage()
 	m.SetHeader("From", c.From)
 	m.SetHeader("To", c.To...)
-	for _, v := range c.Cc {
-		m.SetAddressHeader("Cc", v, v)
+	if len(c.Cc) > 0 {
+		for _, v := range c.Cc {
+			if v != "" {
+				m.SetAddressHeader("Cc", v, v)
+			}
+		}
 	}
-	for _, v := range c.Bcc {
-		m.SetAddressHeader("Bcc", v, v)
+	if len(c.Bcc) > 0 {
+		for _, v := range c.Bcc {
+			if v != "" {
+				m.SetAddressHeader("Bcc", v, v)
+			}
+		}
 	}
 	m.SetHeader("Subject", c.Subject)
 	m.SetBody("text/html", c.Body)
