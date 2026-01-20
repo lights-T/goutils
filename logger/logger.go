@@ -266,3 +266,192 @@ func Fatal(args interface{}) {
 		}
 	}
 }
+
+// ====== 新增：DBLogger 相关 ======
+
+var dbLogger *zerolog.Logger
+
+// InitDBLogger 初始化数据库专用日志器
+func InitDBLogger(conf *Config) *zerolog.Logger {
+	dbLogger = New(conf)
+	return dbLogger
+}
+
+// DBDebugf logs formatted debug message to db log
+func DBDebugf(format string, args ...interface{}) {
+	if dbLogger == nil {
+		return // 安全兜底：未初始化时不 panic
+	}
+	dbLogger.Debug().Msgf(format, args...)
+	if conf := getDBServiceLog(); conf != nil {
+		_ = conf.Infof(format, args...)
+	}
+}
+
+// DBDebug logs debug message to db log
+func DBDebug(args interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	switch args.(type) {
+	case string:
+		dbLogger.Debug().Msg(args.(string))
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(args.(string))
+		}
+	case error:
+		dbLogger.Debug().Msg(args.(error).Error())
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(args.(error).Error())
+		}
+	default:
+		msg := fmt.Sprintf("%v", args)
+		dbLogger.Debug().Msg(msg)
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(msg)
+		}
+	}
+}
+
+// DBInfof logs formatted info message to db log
+func DBInfof(format string, args ...interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	dbLogger.Info().Msgf(format, args...)
+	if conf := getDBServiceLog(); conf != nil {
+		_ = conf.Infof(format, args...)
+	}
+}
+
+// DBInfo logs info message to db log
+func DBInfo(args interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	switch args.(type) {
+	case string:
+		dbLogger.Info().Msg(args.(string))
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(args.(string))
+		}
+	case error:
+		dbLogger.Info().Msg(args.(error).Error())
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(args.(error).Error())
+		}
+	default:
+		msg := fmt.Sprintf("%v", args)
+		dbLogger.Info().Msg(msg)
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Info(msg)
+		}
+	}
+}
+
+// DBWarnf logs formatted warning message to db log
+func DBWarnf(format string, args ...interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	dbLogger.Warn().Msgf(format, args...)
+	if conf := getDBServiceLog(); conf != nil {
+		_ = conf.Warningf(format, args...)
+	}
+}
+
+// DBWarn logs warning message to db log
+func DBWarn(args interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	switch args.(type) {
+	case string:
+		dbLogger.Warn().Msg(args.(string))
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Warning(args.(string))
+		}
+	case error:
+		dbLogger.Warn().Msg(args.(error).Error())
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Warning(args.(error).Error())
+		}
+	default:
+		msg := fmt.Sprintf("%v", args)
+		dbLogger.Warn().Msg(msg)
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Warning(msg)
+		}
+	}
+}
+
+// DBErrorf logs formatted error message to db log
+func DBErrorf(format string, args ...interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	dbLogger.Error().Msgf(format, args...)
+	if conf := getDBServiceLog(); conf != nil {
+		_ = conf.Errorf(format, args...)
+	}
+}
+
+// DBError logs error message to db log
+func DBError(err interface{}) {
+	if dbLogger == nil {
+		return
+	}
+	switch err.(type) {
+	case string:
+		dbLogger.Error().Msg(err.(string))
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Error(err.(string))
+		}
+	case error:
+		dbLogger.Err(err.(error)).Send()
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Error(err.(error))
+		}
+	default:
+		msg := fmt.Sprintf("%v", err)
+		dbLogger.Error().Msg(msg)
+		if conf := getDBServiceLog(); conf != nil {
+			_ = conf.Error(msg)
+		}
+	}
+}
+
+func DBFatalf(format string, args ...interface{}) {
+	dbLogger.Fatal().Msgf(format, args...)
+	if serviceSystemLog != nil {
+		_ = serviceSystemLog.Errorf(format, args...)
+	}
+}
+
+func DBFatal(args interface{}) {
+	switch args.(type) {
+	case string:
+		dbLogger.Fatal().Msg(args.(string))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(args.(string))
+		}
+	case error:
+		dbLogger.Fatal().Msg(args.(error).Error())
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(args.(error).Error())
+		}
+	default:
+		dbLogger.Fatal().Msg(fmt.Sprintf("%v", args))
+		if serviceSystemLog != nil {
+			_ = serviceSystemLog.Error(fmt.Sprintf("%v", args))
+		}
+	}
+}
+
+// 辅助函数：获取 DBLogger 对应的 service.Logger（如果配置了）
+func getDBServiceLog() service.Logger {
+	// 注意：你当前架构中，每个 logger 实例无法独立持有 service.Logger
+	// 所以这里只能复用全局的 serviceSystemLog
+	// 如果你需要独立的 service logger，请改用 Logger 封装结构体（见后文说明）
+	return serviceSystemLog
+}
