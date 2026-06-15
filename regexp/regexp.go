@@ -1,6 +1,9 @@
 package regexp
 
-import "regexp"
+import (
+	"path/filepath"
+	"regexp"
+)
 
 //IsAlpha 判断是否全部是英文
 func IsAlpha(data string) (bool, error) {
@@ -75,4 +78,9 @@ func IsDateTime(data string) (bool, error) {
 //IsDirPath 是一个文件夹路径，必须是绝对路径
 func IsDirPath(data string) (bool, error) {
 	return regexp.MatchString("^[a-zA-Z]:\\\\(?:[^\\\\/:*?\"<>|\\r\\n]+\\\\)*[^\\\\/:*?\"<>|\\r\\n]*$", data)
+}
+
+func IsDirPath2(data string) bool {
+	// filepath.IsAbs 原生支持 Windows 本地绝对路径和 UNC 路径
+	return filepath.IsAbs(data)
 }

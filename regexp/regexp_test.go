@@ -66,3 +66,11 @@ func TestIsDirPath(t *testing.T) {
 	}
 	t.Log(m)
 }
+
+func TestIsDirPath2(t *testing.T) {
+	//m, err := IsDateTime("2023-01-01")
+	//path:= "C:\\Users\\E1394288\\Downloads"
+	path := "\\\\127.0.0.1\\d$"
+	m := IsDirPath2(path)
+	t.Log(m)
+}
