@@ -38,7 +38,7 @@ func Test_ParsePath(t *testing.T) {
 		`E:\ACMSvc12\ACMSvc\ACMSvc12.exe`,
 	}
 	for _, c := range cases {
-		d, n, err := ParsePath(c)
+		d, n, err := GetSystemDrive(c)
 		if err != nil {
 			fmt.Println("解析失败:", err)
 			continue

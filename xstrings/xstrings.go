@@ -89,9 +89,9 @@ func SplitData(input string, max int) (string, string) {
 	return aVariable, bVariable
 }
 
-// ParsePath 从形如 C:\ACM9\ACMSvc\ACMSvc9.exe 的路径中
+// GetSystemDrive 从形如 C:\ACM9\ACMSvc\ACMSvc9.exe 的路径中
 // 提取盘符字母、以及前缀后的数字
-func ParsePath(p string) (drive, num string, err error) {
+func GetSystemDrive(p string) (drive, num string, err error) {
 	// 1. 盘符
 	vol := filepath.VolumeName(p) // "C:"
 	if vol == "" {
