@@ -28,7 +28,7 @@ func Test_SplitData(t *testing.T) {
 	}
 }
 
-func Test_ParsePath(t *testing.T) {
+func Test_GetSystemDrive(t *testing.T) {
 	cases := []string{
 		`F:\ACMas\ACMSvcwe\ACMSvcws.exe`,
 		`C:\ACM\ACMSvc\ACMSvc.exe`,
