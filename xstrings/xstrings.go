@@ -3,7 +3,9 @@ package xstrings
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"math/rand"
+	"path/filepath"
 	"reflect"
 	"strings"
 	"time"
@@ -85,4 +87,42 @@ func SplitData(input string, max int) (string, string) {
 	bVariable := strings.Join(parts[max:], ";")
 
 	return aVariable, bVariable
+}
+
+// ParsePath 从形如 C:\ACM9\ACMSvc\ACMSvc9.exe 的路径中
+// 提取盘符字母、以及前缀后的数字
+func ParsePath(p string) (drive, num string, err error) {
+	// 1. 盘符
+	vol := filepath.VolumeName(p) // "C:"
+	if vol == "" {
+		return "", "", fmt.Errorf("无法识别盘符: %s", p)
+	}
+	drive = strings.TrimSuffix(vol, `:`)
+
+	// 2. 取第一级目录名
+	rest := p[len(vol):] // "\ACM9\ACMSvc\ACMSvc9.exe"
+	rest = strings.TrimPrefix(rest, `\`)
+	idx := strings.IndexByte(rest, '\\')
+	first := rest
+	if idx >= 0 {
+		first = rest[:idx] // "ACM9"
+	}
+
+	// 3. 从末尾提取连续数字
+	i := len(first)
+	for i > 0 && first[i-1] >= '0' && first[i-1] <= '9' {
+		i--
+	}
+	if i == len(first) {
+		//没有数字，返回空字符串
+		num = ""
+		return
+	}
+	if i == 0 {
+		return "", "", fmt.Errorf("目录名以数字开头，无前缀: %s", first)
+	}
+
+	//prefix = first[:i] // "ACM"
+	num = first[i:] // "9" / "10" / "3"
+	return
 }

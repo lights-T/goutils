@@ -1,6 +1,7 @@
 package xstrings
 
 import (
+	"fmt"
 	"testing"
 
 	lfiles "github.com/lights-T/goutils/files"
@@ -24,5 +25,24 @@ func Test_SplitData(t *testing.T) {
 		t.Log("B变量:", B)
 	} else {
 		t.Log("没有超出部分")
+	}
+}
+
+func Test_ParsePath(t *testing.T) {
+	cases := []string{
+		`F:\ACMas\ACMSvcwe\ACMSvcws.exe`,
+		`C:\ACM\ACMSvc\ACMSvc.exe`,
+		`C:\ACM9\ACMSvc\ACMSvc9.exe`,
+		`C:\ACM10\ACMSvc\ACMSvc10.exe`,
+		`D:\ACMSvc3\ACMSvc\ACMSvc3.exe`,
+		`E:\ACMSvc12\ACMSvc\ACMSvc12.exe`,
+	}
+	for _, c := range cases {
+		d, n, err := ParsePath(c)
+		if err != nil {
+			fmt.Println("解析失败:", err)
+			continue
+		}
+		fmt.Printf("路径=%-35s -> 盘符=%s 数字=%s\n", c, d, n)
 	}
 }
