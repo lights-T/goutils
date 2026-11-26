@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"math/rand"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -125,4 +126,24 @@ func GetSystemDrive(p string) (drive, num string, err error) {
 	//prefix = first[:i] // "ACM"
 	num = first[i:] // "9" / "10" / "3"
 	return
+}
+
+// GetExeDir 获取当前程序所在文件夹的绝对路径
+func GetExeDir() (string, error) {
+	// 1. 获取当前正在运行的 exe 完整路径（带文件名）
+	exePath, err := os.Executable()
+	if err != nil {
+		return "", fmt.Errorf("获取可执行文件路径失败: %s", err.Error())
+	}
+
+	// 2. 解析可能的符号链接，确保拿到真实的物理路径
+	realPath, err := filepath.EvalSymlinks(exePath)
+	if err != nil {
+		return "", fmt.Errorf("解析符号链接失败: %s", err.Error())
+	}
+
+	// 3. 剥离文件名，仅保留文件夹路径
+	exeDir := filepath.Dir(realPath)
+
+	return exeDir, nil
 }

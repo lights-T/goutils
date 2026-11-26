@@ -46,3 +46,11 @@ func Test_GetSystemDrive(t *testing.T) {
 		fmt.Printf("路径=%-35s -> 盘符=%s 数字=%s\n", c, d, n)
 	}
 }
+
+func Test_GetExeDir(t *testing.T) {
+	pwd, err := GetExeDir()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	t.Log(pwd)
+}
